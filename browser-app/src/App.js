@@ -1,48 +1,23 @@
-import { Breadcrumb, Layout, Menu, Card } from 'antd';
+import { Breadcrumb, Layout, Card } from 'antd';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 import './App.css';
+import PostList from "./Post/List";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content, Footer, Menu } = Layout;
 
 const App = () => (
+    <Router>
   <Layout className="layout">
-    <Header>
+    <Header style={{color: "#ffffff"}}>
       <div className="logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={['2']}
-        items={new Array(5).fill(null).map((_, index) => {
-          const key = index + 1;
-          return {
-            key,
-            label: `nav ${key}`,
-          };
-        })}
-      />
+        E6156 Sprint1
+
     </Header>
-    <Content
-      style={{
-        padding: '0 50px',
-      }}
-    >
-      <Breadcrumb
-        style={{
-          margin: '16px 0',
-        }}
-      >
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
-      <div className="site-layout-content">
-        <Card title="Default size card" style={{ width: 600, backgroundColor: '#f2e9e4' }}>
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
-        </Card>
-      </div>
-    </Content>
+    <Routes>
+      <Route exact path="/" element={<PostList/>}/>
+    </Routes>
+
     <Footer
       style={{
         textAlign: 'center',
@@ -51,6 +26,7 @@ const App = () => (
       Ant Design ©2018 Created by Ant UED
     </Footer>
   </Layout>
+    </Router>
 );
 
 export default App;
