@@ -1,12 +1,28 @@
 import { Layout, Card } from 'antd';
-import React from 'react';
-import request from "../utils/request";
+import React, { useEffect, useState } from 'react';
+// import request from "../utils/request";
+import axios from 'axios';
 
 function PostList() {
-    let rows = request("http://127.0.0.1:5000/comment/query?postId=1")
-    console.log(rows)
+    const [data, setData] = useState(null)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const ret = await axios('http://127.0.0.1:5011/hello');
+            setData(ret.data)
+            // console.log(ret)
+        }
+
+        // call the function
+        fetchData()
+            // make sure to catch any error
+            .catch(console.error);
+    }, [])
+
+
     return(
         <div>
+            {data}
         </div>
     )
 }
