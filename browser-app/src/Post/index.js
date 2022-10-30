@@ -1,12 +1,13 @@
 import { Layout, Card } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import API from '../services/apis';
 import request from "../utils/request";
 
 const { Sider, Content } = Layout;
 
 function PostHome() {
-    const [posts, setPosts] = useState(null)
+    const [posts, setPosts] = useState([])
 
     useEffect(() => {
         // const fetchData = async () => {
@@ -25,7 +26,8 @@ function PostHome() {
         const postCards = postListData.map(post =>
             <Card 
                 key={post.pid} 
-                title="Card title" 
+                title={post.title}
+                extra={<Link to={"/detail/" + post.pid}>More</Link>}
                 bordered={true} 
                 style={{ margin: "15px" }}
             >

@@ -4,6 +4,7 @@ import React from 'react';
 import './App.css';
 import PostHome from "./Post";
 import UserList from "./User/List";
+import PostDetail from './Detail';
 
 const { Header, Footer } = Layout;
 
@@ -31,6 +32,7 @@ const App = () => (
         <Routes>
           <Route exact path="/" element={<PostHome/>}/>
           <Route exact path="/user" element={<UserList/>}/>
+          <Route exact path="/detail/:postId" element={<PostDetail/>}/>
         </Routes>
       </Layout>
       <Footer
