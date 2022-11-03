@@ -1,10 +1,15 @@
-import { Layout, Card } from 'antd';
+import { Layout, Card, Pagination, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../services/apis';
 import request from "../utils/request";
 
 const { Sider, Content } = Layout;
+const { TextArea } = Input;
+
+const onChange = (e) => {
+    console.log('Change:', e.target.value);
+};
 
 function PostHome() {
     const [posts, setPosts] = useState([])
@@ -42,6 +47,16 @@ function PostHome() {
             <Content>
                 <div style={{padding: "30px", background: "#ececec"}}>
                     {posts}
+                    <Pagination defaultCurrent={1} total={50}/>
+                    <TextArea
+                        showCount
+                        maxLength={100}
+                        style={{
+                            height: 120,
+                        }}
+                        onChange={onChange}
+                        placeholder="can resize"
+                    />
                 </div>
             </Content>
             <Sider theme='light' width={300} style={{background: "#ececec"}}>
