@@ -45,27 +45,21 @@ function PostHome() {
     return(
         <Layout style={{paddingLeft: "100px", paddingRight: "100px", background: "#ececec"}}>
             <Content>
-                <div style={{padding: "30px", background: "#ececec"}}>
+                <div style={{ background: "#ececec"}}>
                     {posts}
-                    <Pagination defaultCurrent={1} total={50}/>
+                    <Pagination defaultCurrent={1} total={50} style={{marginLeft: "20px", marginBottom: "20px"}}/>
                     <TextArea
                         showCount
                         maxLength={100}
                         style={{
                             height: 120,
+                            margin: "20px"
                         }}
                         onChange={onChange}
                         placeholder="can resize"
                     />
                 </div>
             </Content>
-            <Sider theme='light' width={300} style={{background: "#ececec"}}>
-                <Card title="Username">
-                    <p>More User Info</p>
-                    <p>Such as Email</p>
-                    <p>Or Phone Number</p>
-                </Card>
-            </Sider>
         </Layout>
     )
 }

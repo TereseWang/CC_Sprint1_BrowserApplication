@@ -28,7 +28,7 @@ function PostDetail() {
 
   return (
     <Layout>
-      <Content>
+      <Content style={{background: "#ececec"}}>
         <Card
           title={post.title}
           bordered={true} 
