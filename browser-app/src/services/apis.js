@@ -3,6 +3,9 @@ const API = {
     { pid: 1, uid: 2, title: "a sample title", post: "some random text messages." },
     { pid: 2, uid: 2, title: "another title", post: "other random text messages." },
     { pid: 3, uid: 6, title: "maybe later", post: "more random text messages." },
+    { pid: 4, uid: 6, title: "maybe later", post: "more random text messages." },
+    { pid: 5, uid: 6, title: "maybe later", post: "more random text messages." },
+    { pid: 6, uid: 6, title: "maybe later", post: "more random text messages." },
   ],
   CommentListByPostId: [
     {commendId: 1, postId: 2, content: `We supply a series of design principles, 

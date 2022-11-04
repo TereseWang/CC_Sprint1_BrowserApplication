@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import API from '../services/apis';
 import request from "../utils/request";
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 const { TextArea } = Input;
 
 const onChange = (e) => {
@@ -12,7 +12,10 @@ const onChange = (e) => {
 };
 
 function PostHome() {
-    const [posts, setPosts] = useState([])
+    const PAGE_SIZE = 5
+    const [posts, setPosts] = useState([]);
+    const [minVal, setMinVal] = useState(0);
+    const [maxVal, setMaxVal] = useState(PAGE_SIZE);
 
     useEffect(() => {
         // const fetchData = async () => {
@@ -28,26 +31,40 @@ function PostHome() {
         // // call the function
         // fetchData().catch(console.error);
         const postListData = API.postList
-        const postCards = postListData.map(post =>
-            <Card 
-                key={post.pid} 
-                title={post.title}
-                extra={<Link to={"/detail/" + post.pid}>More</Link>}
-                bordered={true} 
-                style={{ margin: "15px" }}
-            >
-                <p>{post.post}</p>
-            </Card>)
-        setPosts(postCards)
-    }, [])
+        setPosts(postListData);
+    }, []);
 
+    const handleChangePage = (value) => {
+        if (value <= 1) {
+            setMinVal(0);
+            setMaxVal(PAGE_SIZE);
+        } else {
+            setMinVal(maxVal);
+            setMaxVal(value * PAGE_SIZE);
+        }
+    }
 
     return(
         <Layout style={{paddingLeft: "100px", paddingRight: "100px", background: "#ececec"}}>
             <Content>
                 <div style={{ background: "#ececec"}}>
-                    {posts}
-                    <Pagination defaultCurrent={1} total={50} style={{marginLeft: "20px", marginBottom: "20px"}}/>
+                    {posts && posts.length > 0 && posts.slice(minVal, maxVal).map(post => 
+                        <Card 
+                            key={post.pid} 
+                            title={post.title}
+                            extra={<Link to={"/detail/" + post.pid}>More</Link>}
+                            bordered={true} 
+                            style={{ margin: "15px" }}
+                        >
+                            <p>{post.post}</p>
+                        </Card>)}
+                    <Pagination 
+                        defaultCurrent={1}
+                        defaultPageSize={PAGE_SIZE}
+                        total={posts.length}
+                        onChange={handleChangePage}
+                        style={{marginLeft: "20px", marginBottom: "20px"}}
+                    />
                     <TextArea
                         showCount
                         maxLength={100}
