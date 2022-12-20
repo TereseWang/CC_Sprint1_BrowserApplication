@@ -39,16 +39,17 @@ const App = () => {
   return (
     <Router>
       <Layout className="layout">
-        <Header style={{color: "#ffffff"}}>
-            E6156 Sprint1
+        <Header style={{backgroundImage: "url(/Image/bg.png)" , backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'cover', backgroundPosition: 'center',
+                            display: 'block', color:"#ffffff",fontSize: '50px', height: '120px'}}>
+            <p style={{marginTop:"30px", marginLeft:"auto", fontWeight:"700"}}>CUbook</p>
         </Header>
         <Menu
-            style={{ marginright: 'auto' }}
-            theme="dark"
+            style={{background: "#002766", display: 'block', marginright: 'auto', color:"#ffffff", fontSize: '20px'}}
             mode="horizontal"
             defaultSelectedKeys={[1]}>
-            <Menu.Item key="1">
-                <span>Posts Home</span>
+            <Menu.Item key="1" style={{marginLeft: '50px'}}>
+                <span>Home</span>
                 <Link to="/" />
             </Menu.Item>
             <Menu.Item key="2">
@@ -64,7 +65,7 @@ const App = () => {
               <Route exact path="/detail/:postId" element={<PostDetail/>}/>
             </Routes>
           </Content>
-          <Sider theme='light' width={300} style={{background: "#ececec"}}>
+          <Sider theme='light' width={340} style={{background: "#ececec", paddingTop:"35px", paddingRight:"20px"}}>
             <UserInfo userInfo={userInfo}/>
           </Sider>
         </Layout>

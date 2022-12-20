@@ -45,7 +45,7 @@ function PostHome() {
     }
 
     return(
-        <Layout style={{paddingLeft: "100px", paddingRight: "100px", background: "#ececec"}}>
+        <Layout style={{paddingTop:"20px", paddingLeft: "50px", paddingRight: "50px", background: "#ececec"}}>
             <Content>
                 <div style={{ background: "#ececec"}}>
                     {posts && posts.length > 0 && posts.slice(minVal, maxVal).map(post => 
