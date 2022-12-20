@@ -29,7 +29,8 @@ function PostDetail(props) {
   useEffect(() => {
     console.log(postId)
     const commentData = API.CommentListByPostId
-    const commentCards = commentData.map(comment => ({
+    const commentCards = commentData.map(comment => (
+        {
       key: comment.commendId,
       // use actions to implement comment replying
       // actions: [<span key="comment-list-reply-to-0">Reply to</span>],
@@ -56,12 +57,12 @@ function PostDetail(props) {
         </Card>
         <List
           className="comment-list"
-          style={{marginLeft: "80px", marginRight: "80px"}}
+          style={{marginLeft: "80px", marginRight: "80px", marginTop:'-40px'}}
           header={`${comments.length} replies`}
           itemLayout="horizontal"
           dataSource={comments}
           renderItem={(item) => (
-            <li>
+            <li style={{width:'785px', marginLeft:'-30px', marginTop:'-10px'}}>
               <Comment
                 style={{background: "white", padding: "10px"}}
                 // actions={item.actions}
@@ -75,7 +76,7 @@ function PostDetail(props) {
         >
         </List>
         <Form
-          style={{margin: "80px", width: "700px"}}
+          style={{width: "785px", marginTop:'80px',marginLeft:'50px'}}
           form={form}
           layout="vertical"
           name="comment"
@@ -88,6 +89,7 @@ function PostDetail(props) {
           scrollToFirstError
         >
           <Form.Item
+              style={{marginTop:'-50px'}}
             name="comment"
             label="Comment"
             rules={[{required: true, message: "Please write contents!"}]}

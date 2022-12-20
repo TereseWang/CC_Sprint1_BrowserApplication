@@ -1,4 +1,4 @@
-import { Layout, Menu, Card, Button } from 'antd';
+import { Layout, Menu, Card, Button, Radio} from 'antd';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import React, { useState} from 'react';
 import './App.css';
@@ -6,14 +6,16 @@ import PostHome from "./Post";
 import UserList from "./User/List";
 import PostDetail from './Detail';
 import Login from './components/Login';
+import Register from "./components/Register";
 
 const { Header, Footer, Content, Sider } = Layout;
 
 const App = () => {
   const [userInfo, setUserInfo] = useState({
-    userId: -1, 
-    username: "", 
-    isLogin: false,
+      userId: -1,
+      username: "",
+      isLogin: false,
+      registerState: 'login',
   });
 
   const handleSubmit = (values) => {
@@ -22,18 +24,38 @@ const App = () => {
     // console.log(userInfo);
   };
 
-  const handleLogout = () => {
+    const handleRegister = (values) => {
+        console.log("login success");
+        setUserInfo({userId: 1, username: "Somebody", isLogin: true});
+        // console.log(userInfo);
+    };
+
+    const handleLogout = () => {
     setUserInfo({userId: -1, username: "", isLogin: false});
-  };
+    };
+
+    const switchLogin = () => {
+        setUserInfo({registerState: 'login'})
+    }
+    const switchRegister = () => {
+        setUserInfo({registerState: 'register'})
+    }
 
   const UserInfo = ({userInfo}) => {
-    return userInfo.isLogin ? 
+    return userInfo.isLogin ?
       <Card title={userInfo.username}>
         <p>More User Info</p>
         <p>Such as Email</p>
         <p>Or Phone Number</p>
         <Button type='primary' onClick={handleLogout}>Logout</Button>
-      </Card> : <Login onSubmit={handleSubmit}/>
+      </Card> :
+        <div>
+            <Radio.Group>
+                <Radio.Button style={{width:'150px', textAlign: 'center'}} value="Login" onClick={switchLogin}>Login</Radio.Button>
+                <Radio.Button style={{width:'150px', textAlign: 'center'}} value="Register" onClick={switchRegister}>Register</Radio.Button>
+            </Radio.Group>
+            {userInfo.registerState === 'login' ? <Login onSubmit={handleSubmit}/> : <Register onSubmit={handleRegister}/>}
+        </div>
   };
 
   return (
@@ -66,7 +88,7 @@ const App = () => {
             </Routes>
           </Content>
           <Sider theme='light' width={340} style={{background: "#ececec", paddingTop:"35px", paddingRight:"20px"}}>
-            <UserInfo userInfo={userInfo}/>
+              <UserInfo userInfo={userInfo}/>
           </Sider>
         </Layout>
         <Footer

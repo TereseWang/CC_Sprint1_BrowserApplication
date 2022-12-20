@@ -76,9 +76,9 @@ function PostHome(props) {
                         onChange={handleChangePage}
                         style={{marginLeft: "20px", marginBottom: "20px"}}
                     />
-                    <p style={{marginLeft: "20px"}}><b style={{background: "#cccccc", padding: "5px"}}>Start a Post Here</b></p>
+                    <p style={{marginLeft: "20px"}}><b style={{background: "#ececec", padding: "5px"}}>Add A New Post</b></p>
                     <Form
-                        style={{margin: "20px", width: "900px"}}
+                        style={{margin: "20px",width: "750px"}}
                         form={form}
                         layout="vertical"
                         name="post"
@@ -90,16 +90,18 @@ function PostHome(props) {
                         disabled={!userInfo.isLogin}
                         scrollToFirstError
                     >
-                        <Form.Item 
+                        <Form.Item
+                            style={{marginTop:'-10px'}}
                             name="title" 
                             label="title"
                             rules={[{required: true, message: "Please write a title!"}]}
-                        ><Input /></Form.Item>
+                        ><Input placeholder="Put your title here"/></Form.Item>
                         <Form.Item
+                            style={{marginTop:'-20px'}}
                             name="content"
                             label="content"
                             rules={[{required: true, message: "Please write contents!"}]}
-                        ><TextArea rows={4}/></Form.Item>
+                        ><TextArea placeholder="Put your content here" rows={4}/></Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" loading={loading}>Submit</Button>
                         </Form.Item>

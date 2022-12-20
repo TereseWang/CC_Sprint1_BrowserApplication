@@ -1,6 +1,7 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
 
+
 const Login = ({ onSubmit }) => {
   // const onFinish = (values) => {
   //   console.log('Success:', values);
@@ -27,7 +28,7 @@ const Login = ({ onSubmit }) => {
         autoComplete="off"
       >
         <Form.Item
-          label="Username"
+          label="Email"
           name="username"
           rules={[
             {
