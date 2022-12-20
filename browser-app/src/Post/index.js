@@ -1,21 +1,32 @@
-import { Layout, Card, Pagination, Input } from 'antd';
+import { Layout, Card, Pagination, Input, Button, Form } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../services/apis';
-import request from "../utils/request";
+// import request from "../utils/request";
 
 const { Content } = Layout;
 const { TextArea } = Input;
 
-const onChange = (e) => {
-    console.log('Change:', e.target.value);
-};
-
-function PostHome() {
-    const PAGE_SIZE = 5
+function PostHome(props) {
+    const PAGE_SIZE = 5;
+    const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
     const [minVal, setMinVal] = useState(0);
     const [maxVal, setMaxVal] = useState(PAGE_SIZE);
+    const userInfo = props.userInfo;
+
+    const onFinish = (values) => {
+        console.log(userInfo);
+        console.log('Received values of form: ', values);
+        setLoading(true);
+
+        setTimeout(() => {
+            console.log("handling data...");
+            setLoading(false);
+            form.resetFields();
+        }, 1000);       
+    };
 
     useEffect(() => {
         // const fetchData = async () => {
@@ -30,7 +41,7 @@ function PostHome() {
 
         // // call the function
         // fetchData().catch(console.error);
-        const postListData = API.postList
+        const postListData = API.postList;
         setPosts(postListData);
     }, []);
 
@@ -42,7 +53,7 @@ function PostHome() {
             setMinVal(maxVal);
             setMaxVal(value * PAGE_SIZE);
         }
-    }
+    };
 
     return(
         <Layout style={{paddingTop:"20px", paddingLeft: "50px", paddingRight: "50px", background: "#ececec"}}>
@@ -65,20 +76,38 @@ function PostHome() {
                         onChange={handleChangePage}
                         style={{marginLeft: "20px", marginBottom: "20px"}}
                     />
-                    <TextArea
-                        showCount
-                        maxLength={100}
-                        style={{
-                            height: 120,
-                            margin: "20px"
-                        }}
-                        onChange={onChange}
-                        placeholder="can resize"
-                    />
+                    <p style={{marginLeft: "20px"}}><b style={{background: "#cccccc", padding: "5px"}}>Start a Post Here</b></p>
+                    <Form
+                        style={{margin: "20px", width: "900px"}}
+                        form={form}
+                        layout="vertical"
+                        name="post"
+                        onFinish={onFinish}
+                        // initialValues={{
+                        //     residence: ['zhejiang', 'hangzhou', 'xihu'],
+                        //     prefix: '86',
+                        // }}
+                        disabled={!userInfo.isLogin}
+                        scrollToFirstError
+                    >
+                        <Form.Item 
+                            name="title" 
+                            label="title"
+                            rules={[{required: true, message: "Please write a title!"}]}
+                        ><Input /></Form.Item>
+                        <Form.Item
+                            name="content"
+                            label="content"
+                            rules={[{required: true, message: "Please write contents!"}]}
+                        ><TextArea rows={4}/></Form.Item>
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit" loading={loading}>Submit</Button>
+                        </Form.Item>
+                    </Form>
                 </div>
             </Content>
         </Layout>
-    )
+    );
 }
 
 export default PostHome;

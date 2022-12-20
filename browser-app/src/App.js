@@ -20,11 +20,11 @@ const App = () => {
     console.log("login success");
     setUserInfo({userId: 1, username: "Somebody", isLogin: true});
     // console.log(userInfo);
-  }
+  };
 
   const handleLogout = () => {
     setUserInfo({userId: -1, username: "", isLogin: false});
-  }
+  };
 
   const UserInfo = ({userInfo}) => {
     return userInfo.isLogin ? 
@@ -60,9 +60,9 @@ const App = () => {
         <Layout>
           <Content>
             <Routes>
-              <Route exact path="/" element={<PostHome/>}/>
+              <Route exact path="/" element={<PostHome userInfo={userInfo}/>}/>
               <Route exact path="/user" element={<UserList/>}/>
-              <Route exact path="/detail/:postId" element={<PostDetail/>}/>
+              <Route exact path="/detail/:postId" element={<PostDetail userInfo={userInfo}/>}/>
             </Routes>
           </Content>
           <Sider theme='light' width={340} style={{background: "#ececec", paddingTop:"35px", paddingRight:"20px"}}>
