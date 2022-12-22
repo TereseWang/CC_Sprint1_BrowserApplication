@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import React from 'react';
 
 
@@ -6,7 +6,6 @@ const Register = ({ onSubmit }) => {
     // const onFinish = (values) => {
     //   console.log('Success:', values);
     // };
-
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };

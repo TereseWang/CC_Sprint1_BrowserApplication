@@ -26,6 +26,8 @@ const App = () => {
 
     const handleRegister = (values) => {
         console.log("login success");
+        console.log(values.email);
+        
         setUserInfo({userId: 1, username: "Somebody", isLogin: true});
         // console.log(userInfo);
     };
