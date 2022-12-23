@@ -16,12 +16,16 @@ const App = () => {
       username: "",
       isLogin: false,
       registerState: 'login',
+      email: "",
+      phone: "",
   });
 
   const handleSubmit = (values) => {
     console.log("login success");
-    setUserInfo({userId: 1, username: "Somebody", isLogin: true});
+    console.log(values);
+    setUserInfo({userId: 1, email:values.email,username: values.name, isLogin: true});
     // console.log(userInfo);
+      
   };
 
     const handleRegister = (values) => {
@@ -33,7 +37,7 @@ const App = () => {
     };
 
     const handleLogout = () => {
-    setUserInfo({userId: -1, username: "", isLogin: false});
+    setUserInfo({userId: -1, username: "", isLogin: false, registerState: 'login'});
     };
 
     const switchLogin = () => {
@@ -46,9 +50,8 @@ const App = () => {
   const UserInfo = ({userInfo}) => {
     return userInfo.isLogin ?
       <Card title={userInfo.username}>
-        <p>More User Info</p>
-        <p>Such as Email</p>
-        <p>Or Phone Number</p>
+          <p>Email: {userInfo.email}</p>
+        <p>Phone: {userInfo.phone}</p>
         <Button type='primary' onClick={handleLogout}>Logout</Button>
       </Card> :
         <div>

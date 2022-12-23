@@ -1,11 +1,26 @@
 import { Button, Checkbox, Form, Input } from 'antd';
-import React from 'react';
-
-
+import React, {useEffect} from 'react';
+import jwt_decode from "jwt-decode";
 const Login = ({ onSubmit }) => {
-  // const onFinish = (values) => {
-  //   console.log('Success:', values);
-  // };
+    useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: "1087828871650-j945q42fdmv6n5mi77uhmvfsap7v6ddr.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {
+                theme: "outline", size:"large",
+            }
+        )
+    },[]);
+
+    function handleCallbackResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+        var userObject = jwt_decode(response.credential);
+        onSubmit(userObject);
+    }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
@@ -28,7 +43,6 @@ const Login = ({ onSubmit }) => {
         autoComplete="off"
       >
         <Form.Item
-          label="Email"
           name="username"
           rules={[
             {
@@ -36,12 +50,12 @@ const Login = ({ onSubmit }) => {
               message: 'Please input your username!',
             },
           ]}
-        >
-          <Input />
+          style={{paddingLeft:'20px', width:'350px'}}>
+          <Input placeholder="Email"/>
         </Form.Item>
 
         <Form.Item
-          label="Password"
+
           name="password"
           rules={[
             {
@@ -49,8 +63,9 @@ const Login = ({ onSubmit }) => {
               message: 'Please input your password!',
             },
           ]}
+          style={{paddingLeft:'20px', width:'350px'}}
         >
-          <Input.Password />
+          <Input.Password placeholder="Password"/>
         </Form.Item>
 
         <Form.Item
@@ -61,7 +76,7 @@ const Login = ({ onSubmit }) => {
             span: 16,
           }}
         >
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox style={{marginTop:"-40px", marginLeft:'-10px', }}>Remember me</Checkbox>
         </Form.Item>
 
         <Form.Item
@@ -70,9 +85,10 @@ const Login = ({ onSubmit }) => {
             span: 16,
           }}
         >
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button type="primary" htmlType="submit" style={{marginTop:'-20px', marginLeft:'-65px', width:'220px'}}>
+            Login
           </Button>
+            <div id="signInDiv" style={{marginTop:'20px', marginLeft:'-50px'}}></div>
         </Form.Item>
       </Form>
     </div>
