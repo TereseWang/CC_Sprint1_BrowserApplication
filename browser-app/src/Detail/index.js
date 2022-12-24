@@ -34,12 +34,12 @@ function PostDetail(props) {
         setComments(comments.concat(newComment));
         setLoading(false);
         form.resetFields();
-    }, 1000);       
+    }, 1000);
 };
 
   useEffect(() => {
     console.log(postId);
-    
+
     const fetchCommentData = async () => {
       let commentData = [];
       const ret = await request(API.CommentListByPostId + postId);
@@ -69,7 +69,7 @@ function PostDetail(props) {
       <Content style={{background: "#ececec"}}>
         <Card
           title={post.title}
-          bordered={true} 
+          bordered={true}
           style={{ margin: "50px" }}
         >
           <p>{post.content}</p>

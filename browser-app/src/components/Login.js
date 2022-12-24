@@ -24,7 +24,7 @@ const Login = ({ onSubmit }) => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-  
+
   return (
     <div style={{background: "white", padding: "20px", marginRight: "20px"}}>
       <Form

@@ -33,17 +33,17 @@ function PostHome(props) {
             setPosts(posts.concat([newPost]));
             setLoading(false);
             form.resetFields();
-        }, 1000);       
+        }, 1000);
     };
 
     useEffect(() => {
         const fetchPostData = async () => {
             const ret = await request(API.postList);
             console.log(ret.data);
-    
+
             setPosts(ret.data);
         };
-        
+
         fetchPostData();
     }, []);
 
@@ -61,17 +61,17 @@ function PostHome(props) {
         <Layout style={{paddingTop:"20px", paddingLeft: "50px", paddingRight: "50px", background: "#ececec"}}>
             <Content>
                 <div style={{ background: "#ececec"}}>
-                    {posts && posts.length > 0 && posts.slice(minVal, maxVal).map(post => 
-                        <Card 
-                            key={post.pid} 
+                    {posts && posts.length > 0 && posts.slice(minVal, maxVal).map(post =>
+                        <Card
+                            key={post.pid}
                             title={post.post_title}
                             extra={<Link to={"/detail/" + post.pid}>More</Link>}
-                            bordered={true} 
+                            bordered={true}
                             style={{ margin: "15px" }}
                         >
                             <p>{post.post_content}</p>
                         </Card>)}
-                    <Pagination 
+                    <Pagination
                         defaultCurrent={1}
                         defaultPageSize={PAGE_SIZE}
                         total={posts.length}
@@ -94,7 +94,7 @@ function PostHome(props) {
                     >
                         <Form.Item
                             style={{marginTop:'-10px'}}
-                            name="title" 
+                            name="title"
                             label="title"
                             rules={[{required: true, message: "Please write a title!"}]}
                         ><Input placeholder="Put your title here"/></Form.Item>
