@@ -23,7 +23,7 @@ const App = () => {
   const handleSubmit = (values) => {
     console.log("login success");
     console.log(values);
-    setUserInfo({userId: 1, email:values.email,username: values.name, isLogin: true});
+    setUserInfo({userId: 1, email:values.email,username: values.username, isLogin: true});
     // console.log(userInfo);
       
   };
@@ -50,8 +50,7 @@ const App = () => {
   const UserInfo = ({userInfo}) => {
     return userInfo.isLogin ?
       <Card title={userInfo.username}>
-          <p>Email: {userInfo.email}</p>
-        <p>Phone: {userInfo.phone}</p>
+          <p>username: {userInfo.username}</p>
         <Button type='primary' onClick={handleLogout}>Logout</Button>
       </Card> :
         <div>
@@ -79,16 +78,16 @@ const App = () => {
                 <span>Home</span>
                 <Link to="/" />
             </Menu.Item>
-            <Menu.Item key="2">
+            {/* <Menu.Item key="2">
                 <span>Users</span>
                 <Link to="/user" />
-            </Menu.Item>
+            </Menu.Item> */}
         </Menu>
         <Layout>
           <Content>
             <Routes>
               <Route exact path="/" element={<PostHome userInfo={userInfo}/>}/>
-              <Route exact path="/user" element={<UserList/>}/>
+              {/* <Route exact path="/user" element={<UserList/>}/> */}
               <Route exact path="/detail/:postId" element={<PostDetail userInfo={userInfo}/>}/>
             </Routes>
           </Content>

@@ -2,7 +2,7 @@ import { Layout, Card, Pagination, Input, Button, Form } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../services/apis';
-// import request from "../utils/request";
+import request from "../utils/request";
 
 const { Content } = Layout;
 const { TextArea } = Input;
@@ -21,28 +21,30 @@ function PostHome(props) {
         console.log('Received values of form: ', values);
         setLoading(true);
 
+        const newPost = {
+            pid: posts.length+1,
+            uid: 1,
+            post_content: values.content,
+            post_title: values.title,
+        };
+
         setTimeout(() => {
             console.log("handling data...");
+            setPosts(posts.concat([newPost]));
             setLoading(false);
             form.resetFields();
         }, 1000);       
     };
 
     useEffect(() => {
-        // const fetchData = async () => {
-        //     const ret = await request('http://127.0.0.1:5011/comment/query?postId=1');
-        //     const comments = ret.data.content.map((info, index) => <div key={index}>
-        //             <span>{info.commentId}</span>
-        //             <span>{info.content}</span>
-        //         </div>)
-        //     setData(comments)
-        //     console.log(ret.data.content)
-        // }
-
-        // // call the function
-        // fetchData().catch(console.error);
-        const postListData = API.postList;
-        setPosts(postListData);
+        const fetchPostData = async () => {
+            const ret = await request(API.postList);
+            console.log(ret.data);
+    
+            setPosts(ret.data);
+        };
+        
+        fetchPostData();
     }, []);
 
     const handleChangePage = (value) => {
@@ -62,12 +64,12 @@ function PostHome(props) {
                     {posts && posts.length > 0 && posts.slice(minVal, maxVal).map(post => 
                         <Card 
                             key={post.pid} 
-                            title={post.title}
+                            title={post.post_title}
                             extra={<Link to={"/detail/" + post.pid}>More</Link>}
                             bordered={true} 
                             style={{ margin: "15px" }}
                         >
-                            <p>{post.post}</p>
+                            <p>{post.post_content}</p>
                         </Card>)}
                     <Pagination 
                         defaultCurrent={1}

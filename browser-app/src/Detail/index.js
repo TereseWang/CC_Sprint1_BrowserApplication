@@ -3,7 +3,7 @@ import { Content } from 'antd/lib/layout/layout';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import API from '../services/apis';
-// import request from "../utils/request";
+import request from "../utils/request";
 
 const { TextArea } = Input;
 
@@ -19,28 +19,47 @@ function PostDetail(props) {
     console.log('Received values of form: ', values);
     setLoading(true);
 
+    const newComment = {
+      key: comments.length+1,
+      // use actions to implement comment replying
+      // actions: [<span key="comment-list-reply-to-0">Reply to</span>],
+      author: userInfo.username,
+      avatar: <Avatar />,
+      content: (<p>{values.comment}</p>),
+      datetime: <span>{comments[comments.length-1].date}</span>
+    };
+
     setTimeout(() => {
         console.log("handling data...");
+        setComments(comments.concat(newComment));
         setLoading(false);
         form.resetFields();
     }, 1000);       
 };
 
   useEffect(() => {
-    console.log(postId)
-    const commentData = API.CommentListByPostId
-    const commentCards = commentData.map(comment => (
-        {
-      key: comment.commendId,
-      // use actions to implement comment replying
-      // actions: [<span key="comment-list-reply-to-0">Reply to</span>],
-      author: "Han Solo",
-      avatar: <Avatar />,
-      content: (<p>{comment.content}</p>),
-      datetime: (<Tooltip title="2022-10-30 22:22:33"><span>9 hours ago</span></Tooltip>)
-    }))
+    console.log(postId);
+    
+    const fetchCommentData = async () => {
+      let commentData = [];
+      const ret = await request(API.CommentListByPostId + postId);
+      console.log(ret.data.content);
+      commentData = ret.data.content;
 
-    setComments(commentCards)
+      const commentCards = commentData.map(comment => ({
+        key: comment.comment_id,
+        // use actions to implement comment replying
+        // actions: [<span key="comment-list-reply-to-0">Reply to</span>],
+        author: "Han Solo",
+        avatar: <Avatar />,
+        content: (<p>{comment.content}</p>),
+        datetime: <span>{comment.date}</span>
+      }));
+
+      setComments(commentCards);
+    };
+
+    fetchCommentData();
   }, [postId]);
 
   const post = { title: "A Sample Title", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non sapien ut elit posuere vestibulum. Fusce non faucibus sem, non tristique nulla. Nulla quis posuere libero. Vestibulum dui leo, interdum vitae gravida sit amet, sagittis vel justo. Nam nec sagittis nulla, vel rutrum ante. Morbi viverra nibh a odio sodales tincidunt. Nulla sed arcu nibh. Duis volutpat mattis elit quis commodo. Fusce quis ultricies diam. Curabitur sit amet magna sagittis, varius est vel, dapibus purus. Aliquam accumsan luctus nibh, eu rhoncus libero ornare pharetra. Proin posuere metus ut velit auctor pulvinar. Sed aliquet auctor est et sollicitudin. Maecenas quis leo in eros placerat mattis at id mi. Maecenas ut iaculis mi. Maecenas finibus massa erat, id molestie ante finibus ac." };
@@ -72,7 +91,7 @@ function PostDetail(props) {
                 datetime={item.datetime}
               />
             </li>
-          )}    
+          )}
         >
         </List>
         <Form
